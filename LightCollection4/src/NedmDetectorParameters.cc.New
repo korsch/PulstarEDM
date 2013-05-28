@@ -1,0 +1,440 @@
+#include "NedmDetectorParameters.hh"
+
+#include "G4UnitsTable.hh"
+
+NedmDetectorParameters* NedmDetectorParameters::instance_;
+
+NedmDetectorParameters::NedmDetectorParameters() {
+  SetDefaults();
+}
+
+void NedmDetectorParameters::SetDefaults() {
+
+  surface_thickness_ = 0.01*cm;
+  //  G4double surface_thickness_ = 0.005*cm;
+  //  surface_thickness_ = 0.5*5*cm;
+  
+  lightguide_length_ =   3.0*2.54*cm;
+  lightguide_cell_gap_ = 0.0*cm;
+  cell_wall_thickness_ = 0.5*2.54*cm;
+  
+
+  //PMT Defaults
+  pmt_radius_ = 2.55 * cm;
+
+
+  //Geometry Defaults
+  mirror_airgap_ = single_airgap_ = 0.02*cm;
+  //  use_mirror_ = true;
+  use_mirror_ = false;
+  use_hole_ = true;
+  //  use_hole_ = false;
+  use_plug_ = true;
+  //  use_plug_ = false;
+  use_window_ = false;
+  use_full_pmt_ = true;
+
+}
+
+void NedmDetectorParameters::Compute() {
+  ComputeCellParameters();
+  ComputeMirrorParameters();
+  ComputeEndcapParameters();
+  ComputeLightguideParameters();
+  ComputeWindowParameters();
+  ComputePmtParameters();
+}
+
+
+
+void NedmDetectorParameters::ComputeCellParameters() {
+
+  //  G4double surface_thickness = 0.01*cm;
+  cell_inside_x_ = 4.0*2.54*cm; 
+  cell_inside_y_ = 3.0*2.54*cm;
+  cell_inside_z_ = 40.0*cm;
+
+  //  G4double surface_thickness = 1.0*cm;
+  G4double surface_thickness = 0.01*cm;
+
+  G4double cell_tb_x = 0.5*(cell_inside_x_ + 2.0*surface_thickness);
+  G4double cell_tb_y = 0.5*(cell_wall_thickness_);
+  G4double cell_tb_z = 0.5*(cell_inside_z_ + 2.0*cell_wall_thickness_);
+
+  G4double cell_lr_x = 0.5*(cell_wall_thickness_);
+  G4double cell_lr_y = 0.5*(cell_inside_y_  + 2.0*cell_wall_thickness_ + 2.0*surface_thickness);
+  G4double cell_lr_z = cell_tb_z;
+
+  cell_tb_size_ = G4ThreeVector(cell_tb_x, cell_tb_y, cell_tb_z);
+  cell_lr_size_ = G4ThreeVector(cell_lr_x, cell_lr_y, cell_lr_z);
+
+
+  //  G4double surface_thickness = 1*cm;
+
+  //The 4 here comes from the fact that there are two full surfaces
+  //of thickness 2*surface_thickness between the plates. These are the 
+  //surface volumes
+  G4double cell_tb_distx_ = 0.0;
+  G4double cell_tb_disty_ = cell_lr_y - cell_tb_y; 
+  G4double cell_tb_distz_ = 0.0;
+ 
+  cell_wall_tb_position_ = G4ThreeVector(cell_tb_distx_, cell_tb_disty_, cell_tb_distz_);
+
+  G4double cell_lr_distx_ = cell_tb_x + cell_lr_x;
+  G4double cell_lr_disty_ = 0.0;
+  G4double cell_lr_distz_ = 0.0;
+
+  cell_wall_lr_position_ = G4ThreeVector(cell_lr_distx_, cell_lr_disty_, cell_lr_distz_);
+
+  G4double cell_tb_x_surface_size_ = cell_tb_x;
+  G4double cell_tb_y_surface_size_ = surface_thickness;
+  G4double cell_tb_z_surface_size_ = cell_tb_z;
+
+  cell_tb_surface_size_ = G4ThreeVector(cell_tb_x_surface_size_, cell_tb_y_surface_size_, cell_tb_z_surface_size_);
+
+  G4double cell_tb_x_surface_position_ = cell_tb_distx_;
+  G4double cell_tb_y_surface_position_ = cell_tb_disty_ - cell_tb_y - cell_tb_y_surface_size_;
+  G4double cell_tb_z_surface_position_ = cell_tb_distz_;
+
+  cell_tb_surface_position_ = G4ThreeVector(cell_tb_x_surface_position_, cell_tb_y_surface_position_, cell_tb_z_surface_position_);
+
+  G4double cell_lr_x_surface_size_ = surface_thickness;
+  G4double cell_lr_y_surface_size_ = cell_lr_y - 2.0*cell_tb_y - 2.0*surface_thickness; 
+  G4double cell_lr_z_surface_size_ = cell_lr_z;
+
+  cell_lr_surface_size_ = G4ThreeVector(cell_lr_x_surface_size_, cell_lr_y_surface_size_, cell_lr_z_surface_size_);
+
+  G4double cell_lr_x_surface_position_ = cell_tb_x  - cell_lr_x - cell_lr_x_surface_size_;
+  G4double cell_lr_y_surface_position_ = 0.0;
+  G4double cell_lr_z_surface_position_ = cell_lr_z;
+
+
+  cell_lr_surface_position_ = G4ThreeVector(cell_lr_x_surface_position_, cell_lr_y_surface_position_, cell_lr_z_surface_position_);
+
+  // outside surfaces
+  G4double cell_tb_x_outside_surface_size_ = cell_tb_x + 2.0*cell_lr_x;
+  G4double cell_tb_y_outside_surface_size_ = surface_thickness;
+  G4double cell_tb_z_outside_surface_size_ = cell_tb_z;
+
+  cell_tb_outside_surface_size_ = G4ThreeVector(cell_tb_x_outside_surface_size_, cell_tb_y_outside_surface_size_, cell_tb_z_outside_surface_size_);
+
+  G4double cell_tb_x_outside_surface_position_ = cell_tb_distx_;
+  G4double cell_tb_y_outside_surface_position_ = cell_tb_disty_ + cell_tb_y + cell_tb_y_surface_size_ +cell_tb_y_outside_surface_size_;
+  G4double cell_tb_z_outside_surface_position_ = cell_tb_distz_;
+
+  cell_tb_outside_surface_position_ = G4ThreeVector(cell_tb_x_surface_position_, cell_tb_y_surface_position_, cell_tb_z_surface_position_);
+
+  G4double cell_lr_x_outside_surface_size_ = surface_thickness;
+  G4double cell_lr_y_outside_surface_size_ = cell_lr_y + 2.0*surface_thickness; 
+  G4double cell_lr_z_outside_surface_size_ = cell_lr_z;
+
+  cell_lr_outside_surface_size_ = G4ThreeVector(cell_lr_x_outside_surface_size_, cell_lr_y_outside_surface_size_, cell_lr_z_outside_surface_size_);
+
+  G4double cell_lr_x_outside_surface_position_ = cell_tb_x  + cell_lr_x + cell_lr_x_outside_surface_size_;
+  G4double cell_lr_y_outside_surface_position_ = 0.0;
+  G4double cell_lr_z_outside_surface_position_ = cell_lr_z;
+
+
+  cell_lr_outside_surface_position_ = G4ThreeVector(cell_lr_x_outside_surface_position_, cell_lr_y_outside_surface_position_, cell_lr_z_outside_surface_position_);
+  
+
+
+
+  //Cell hole defaults
+  hole_position_ = G4ThreeVector(0, -(cell_tb_surface_size().y()-cell_tb_outside_surface_size().y() ), 0);
+  hole_radius_ = 1.00*cm;
+
+}
+
+void NedmDetectorParameters::ComputeLightguideParameters() 
+{
+
+  std::string filename = "LightGuideValues.txt";
+  std::ifstream ifs ( filename.c_str(), std::ifstream::in );
+
+  std::vector<G4double> lightguide_dx;
+  std::vector<G4double> lightguide_dy;
+  std::vector<G4double> lightguide_dz;
+  size_t nlines(0);
+
+  GetLightGuideGeometry(lightguide_dx, lightguide_dy, lightguide_dz);
+  
+  for(int i=0; i<lightguide_dx.size(); i++){
+    std::cout << lightguide_dx[i] << ' ' << lightguide_dy[i] << ' ' << lightguide_dz[i] << ' ' << std::endl;
+  }
+
+  /*
+  if(!ifs){
+    std::cerr << "File \"" << filename << "\" not found! Exiting" << std::endl;
+    std::exit(-1);
+  }
+
+  while(ifs.good()){
+    double tmp(0);
+    ifs >> tmp;
+    lightguide_dx.push_back(tmp*m);
+    ifs >> tmp;
+    lightguide_dy.push_back(tmp*m);
+    ifs >> tmp;
+    lightguide_dz.push_back(0.5*tmp*m);
+    //    cout << z[nlines] << ' ' << truepot[nlines] << endl;
+    nlines++;
+  }
+  */
+
+  nsegments = lightguide_dx.size();
+  std::cout << "Number of light guide segments: " << nsegments << std::endl;
+
+
+
+  lightguide_size_.resize(nsegments);
+
+  for(size_t k=0; k< nsegments; k++){    
+    lightguide_size_[k].setX(lightguide_dx[k]);
+    lightguide_size_[k].setY(lightguide_dy[k]);
+    lightguide_size_[k].setZ(lightguide_dz[k]);
+  }
+
+
+  //  for(size_t k=0; k< nsegments; k++){
+  //    std::cout<< lightguide_size(k) << std::endl;
+  //  }
+
+
+  //LG Defaults
+  //  inner_lightguide_size_ = G4ThreeVector(2.2225, 0.635, 76.2) * cm;
+  lightguide_gap_ = 5.*um;
+  lightguide_files_[0] = lightguide_files_[1] = lightguide_files_[2] = "";
+  lightguide_loss_ = true;
+
+
+  lightguide_topbottom_surface_size_.resize(nsegments);
+
+  for(size_t k=0; k< nsegments; k++){    
+    lightguide_topbottom_surface_size_[k].setX(lightguide_dx[k]);
+    lightguide_topbottom_surface_size_[k].setY(surface_thickness_);
+    lightguide_topbottom_surface_size_[k].setZ(lightguide_dz[k]);
+  }
+
+  lightguide_leftright_surface_size_.resize(nsegments);
+
+  for(size_t k=0; k< nsegments; k++){    
+    lightguide_leftright_surface_size_[k].setX(surface_thickness_);
+    lightguide_leftright_surface_size_[k].setY(lightguide_dy[k]+2.0*surface_thickness_);
+    lightguide_leftright_surface_size_[k].setZ(lightguide_dz[k]);
+  }
+
+  lightguide_frontback_surface_size_.resize(2);
+
+  lightguide_frontback_surface_size_[0].setX(lightguide_size_[0].getX()+2*surface_thickness_);
+  lightguide_frontback_surface_size_[0].setY(lightguide_size_[0].getY()+2*surface_thickness_);
+  lightguide_frontback_surface_size_[0].setZ(surface_thickness_);
+
+  lightguide_frontback_surface_size_[1].setX(lightguide_size_[nsegments-1].getX()+2.0*surface_thickness_);
+  lightguide_frontback_surface_size_[1].setY(lightguide_size_[nsegments-1].getY()+2.0*surface_thickness_);
+  lightguide_frontback_surface_size_[1].setZ(surface_thickness_);
+
+
+
+
+
+  lightguide_position_.resize(nsegments);
+
+  for(size_t k=0; k< nsegments; k++){
+    if(nsegments){
+      lightguide_position_[k].setX(0);
+      lightguide_position_[k].setY(0);
+      lightguide_position_[k].setZ(cell_lr_size_.getZ()+(2.0*k+1)*lightguide_size_[k].getZ()+2.0*surface_thickness_ + lightguide_cell_gap_);
+    }
+  }
+
+  lightguide_topbottom_surface_position_.resize(nsegments);
+  lightguide_leftright_surface_position_.resize(nsegments);
+
+  for(size_t k=0; k< nsegments; k++){
+    if(nsegments){
+      lightguide_topbottom_surface_position_[k] = lightguide_position_[k];
+      lightguide_topbottom_surface_position_[k].setY(lightguide_size_[k].getY() + surface_thickness_);
+
+      lightguide_leftright_surface_position_[k] = lightguide_position_[k];
+      lightguide_leftright_surface_position_[k].setX(lightguide_size_[k].getX() + surface_thickness_);
+    }
+  }
+
+  lightguide_frontback_surface_position_.resize(2);
+  
+  G4ThreeVector Center = G4ThreeVector(0,0,0);
+
+  lightguide_frontback_surface_position_[0] = Center;
+  lightguide_frontback_surface_position_[0].setZ(cell_lr_size_.getZ() + surface_thickness_ + lightguide_cell_gap_);
+  lightguide_frontback_surface_position_[1] = Center;
+  lightguide_frontback_surface_position_[1].setZ(cell_lr_size_.getZ() + 2.0*nsegments*lightguide_size_[0].getZ() + 3.0*surface_thickness_ + lightguide_cell_gap_); //assuming all lg blocks are of same length
+
+  //  G4double outer_x_position = outer_x + inner_lightguide_size_.x() + lightguide_gap_;
+}
+
+void NedmDetectorParameters::ComputePmtParameters() {
+  pmt_z_ = 1.0*cm; //inner_lightguide_size_.y();
+  G4double cell_z = cell_lr_size_.z();
+  G4double lg_z = 1.0*cm;//inner_lightguide_size_.z();
+  G4double pmt_posz;
+
+  if(use_window_)
+    //    pmt_posz = cell_z + 2*cold_gap_z_ + 2*window_z_ + 2*window_to_pmt_z_ + pmt_z_;
+    pmt_posz = lightguide_frontback_surface_position_[1].getZ() + surface_thickness_ + pmt_z_;
+  else
+    //    pmt_posz = cell_z + pmt_z_ + single_airgap_; 
+    pmt_posz = lightguide_frontback_surface_position_[1].getZ()  + surface_thickness_ + pmt_z_;
+  
+  //  if(!use_lightguide_files())
+  //    pmt_posz += 2*lg_z;
+
+  pmt_position_.setZ(pmt_posz);
+}
+
+void NedmDetectorParameters::ComputeMirrorParameters() {
+  mirror_size_ = G4ThreeVector(5.08, 0.635, 0.5) * cm;
+  mirror_z_position_ = -(cell_lr_size_.z() + mirror_size_.z() + mirror_airgap_);
+}
+
+void NedmDetectorParameters::ComputeEndcapParameters() {
+  endcap_size_ = G4ThreeVector(cell_tb_size_.x(), cell_tb_size_.x() - 2*cell_tb_size_.y(), 0.635*cm);
+  endcap_position_ = G4ThreeVector(0, 0, cell_lr_size_.z() - endcap_size_.z());
+}
+
+void NedmDetectorParameters::ComputeWindowParameters() {
+  cold_gap_z_ = 0.03175*cm;          // half of cold gap
+  window_to_pmt_z_ = 0.03175*cm;     // half of gap b/w quartz win and PMT
+  window_z_ = 0.3175*cm;       // half of quartz win thickness
+  if(use_lightguide_files())
+    window_radius_ = 2.54*cm;
+  else
+    window_radius_ = 10. * cm;
+
+  window_position_ = G4ThreeVector(0, 0, 
+				   //      cell_size_.z() + 2*inner_lightguide_size_.z() + 2*cold_gap_z_ + window_z_);
+      cell_lr_size_.z()  + 2*cold_gap_z_ + window_z_);
+                      
+}
+
+void NedmDetectorParameters::Print() {
+  /*
+  if(!use_lightguide_files()) {
+    //    G4cout << "Simulating " << G4BestUnit(2*inner_lightguide_size_.z(),"Length")
+    //           << " lightguide" << G4endl;
+
+    //    G4cout << "Width: " << G4BestUnit(2*inner_lightguide_size_.x(), "Length") << G4endl;
+  } else {
+    G4cout << "Simulating lightguides defined in files: " << G4endl;
+    for(int i = 0; i < 3; i++) {
+      G4cout << lightguide_files(i) << G4endl;
+    }
+    G4cout << G4endl;
+  }
+  */
+
+  G4cout << "Hole enabled?: " << use_hole_ << G4endl;
+
+  G4cout << "Mirror Enabled?: " << use_mirror_ << G4endl;
+
+  G4cout << "Width of Single Airgap: " <<
+    G4BestUnit(single_airgap_, "Length") << G4endl;
+
+  G4cout << "Width of Mirror Airgap: " <<
+    G4BestUnit(mirror_airgap_, "Length") << G4endl;
+
+
+}
+
+void NedmDetectorParameters::GetLightGuideGeometry(std::vector<G4double>& dx, std::vector<G4double>& dy, std::vector<G4double>& dz)
+{
+
+  SetDefaults();
+
+  double L1 = lightguide_length_/m;
+
+  size_t nSlices = 390;
+  double dL1(L1/double(nSlices)); //m
+
+
+  double X11(cell_inside_x_  + 2*(cell_wall_thickness_+ 2.0*surface_thickness_));
+  double Y11(cell_inside_y_  + 2*(cell_wall_thickness_+ 2.0*surface_thickness_));
+
+  double X21(0.05*m); 
+  double Y21(X21);
+
+  double aX1(1.1);  // note: negative values for aX or aY change curvature from "+" to "-"
+  double aY1(aX1);
+
+
+  std::vector<double> x1;
+  std::vector<double> y1;
+  std::vector<double> z1;
+  std::vector<double> angleX1;
+  std::vector<double> angleY1;
+
+  GetGeometry(dL1, aX1, aY1, L1, X11, Y11, X21, Y21, x1,y1,z1, angleX1, angleY1);
+
+  size_t n = nSlices;
+ 
+  for(size_t i=0; i< (n+1); i++){
+    if(i != (n)){
+      dx.push_back(0.5*x1[i]);
+      dy.push_back(0.5*y1[i]); 
+      dz.push_back(0.5*dL1*m);
+    }
+
+ }
+
+
+  return;
+}
+
+void GetGeometry(double dL, double aX, double aY, double L1, double X1, double Y1, double X2, double Y2, std::vector<double>& x, std::vector<double>& y, std::vector<double>& z, std::vector<double>& angleX, std::vector<double>& angleY)
+{
+
+
+  int nSegments = int(L1/dL);
+
+  double xt(0.0);
+  double yt(0.0);
+  double zt(0.0);
+
+
+  while(zt <= L1){
+    xt = (X2 - X1)/L1 * zt - aX* (zt-L1)/L1 * zt/L1 * fabs(X2-X1) + X1;
+    x.push_back(xt);
+
+    yt = (Y2 - Y1)/L1 * zt - aY* (zt-L1)/L1 * zt/L1 * fabs(Y2-Y1) + Y1;
+    y.push_back(yt);
+    
+    z.push_back(zt);
+
+    zt += dL;
+  }
+
+
+  double degree(180.0/M_PI);
+
+  for(size_t i=0; i< (x.size()-1); i++){
+    double dx = x[i+1] - x[i];
+    double dy = y[i+1] - y[i];
+    
+    double Xangle = atan(dx/dL)*degree;
+    double Yangle = atan(dy/dL)*degree;
+
+
+    if(fabs(Xangle) < 1.0e-9) Xangle = 0.0;
+    if(fabs(Yangle) < 1.0e-9) Yangle = 0.0;
+
+    angleX.push_back(0.5*Xangle);
+    angleY.push_back(0.5*Yangle);
+  }
+
+  //  for(size_t i=0; i< (x.size()); i++){
+  //    cout << i+1 << ' ' << x[i] << ' ' << y[i] << ' ' << z[i] << ' ' << angleX[i] << ' ' << angleY[i] << endl;
+  //    }    
+
+
+  return;
+}

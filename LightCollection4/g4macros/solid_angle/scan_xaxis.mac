@@ -1,0 +1,8 @@
+/control/verbose
+/guides/analysis/rootfile solid_angle_xscan.root
+/control/alias y 0.
+/control/alias z 0.
+/control/alias xwidth 5
+/control/alias xstep 0.5
+/control/alias events 10000
+/control/loop g4macros/solid_angle/lattice_scan/do_run.mac x -{xwidth} {xwidth} {xstep}

@@ -1,0 +1,8 @@
+#/control/execute g4macros/testPiece.mac
+
+/nedm/generator/random true
+/nedm/generator/minVector -5.08 0.634 -20. cm
+/nedm/generator/maxVector 5.08 0.634 20. cm
+/nedm/detector/mirror true
+
+/nedm/detector/hole false

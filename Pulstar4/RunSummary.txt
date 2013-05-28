@@ -1,0 +1,27 @@
+
+
+-----------------------------------------------------------
+total # of neutrons in this run: 1e+06
+total # of neutrons transmitted: 43210
+total time for transport to cell: 14329.7 s (for: 43210 UCNs)
+average time for transport to cell: 0.331628 s 
+transport efficiency: 0.04321
+Figure of Merit (<t>/eff): 7.6748
+-----------------------------------------------------------
+
+
+gray tube:                 162.295
+cone section:              72.5895
+yellow section 1:          272.208
+yellow section 2:          112.396
+infection cell (cylinder): 150.374
+reflector:                 0
+Endcap (w/ hole):          17.0129
+Endcap (no hole):          16.9184
+Channel to target cell:    2.89595
+v1valve:                   0
+v1rod:                     26.1454
+UCN stop                   43210
+
+
+-----------------------------------------------------------

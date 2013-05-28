@@ -1,0 +1,45 @@
+#
+# Macro file for the initialization phase of "guides_hole.cc"
+# when running in interactive mode
+#
+# Sets some default verbose
+#
+/control/verbose 2
+/run/verbose 2
+#
+# create empty scene
+#
+/vis/scene/create
+#
+# Create a scene handler for a specific graphics system
+# (Edit the next line(s) to choose another graphic system)
+#
+###/vis/open DAWNFILE
+####/vis/open HepRepFile
+####/vis/open OGLIX 600x600-0+0
+/vis/open OGL 600x600-0+0
+######/vis/open OGLSXm
+###/vis/viewer/set/viewpointThetaPhi 70 20
+#
+#/vis/viewer/zoom 16.
+/vis/viewer/flush
+
+#
+# for drawing the tracks
+# Draw trajectories at end of event, showing trajectory points as
+# markers of size 2 pixels (parameter/1000).
+####/vis/scene/add/trajectories 2000
+# (if too many tracks cause core dump => storeTrajectory 0)
+/tracking/storeTrajectory 1
+#####/vis/scene/endOfEventAction accumulate
+#
+# Refresh ready for run
+/vis/viewer/refresh
+#ready
+####/vis/scene/endOfEventAction accumulate 100
+####/vis/scene/add/trajectories
+####/tracking/storeTrajectory 1
+
+# start particles
+###/run/beamOn 100
+####/vis/viewer/flush

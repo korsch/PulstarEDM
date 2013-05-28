@@ -1,0 +1,8 @@
+/run/verbose
+/control/verbose
+/nedm/detector/castLPB 0
+/nedm/detector/machinedLPB 0
+/nedm/detector/bulkAbsorption 100 m
+/control/execute g4macros/testPiece.mac
+/nedm/detector/update
+/run/beamOn 10000

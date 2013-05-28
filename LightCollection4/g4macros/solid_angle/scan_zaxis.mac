@@ -1,0 +1,8 @@
+/control/verbose
+/guides/analysis/rootfile solid_angle_zscan.root
+/control/alias x 0.
+/control/alias y 0.
+/control/alias zwidth 20
+/control/alias zstep 1
+/control/alias events 10000
+/control/execute g4macros/solid_angle/lattice_scan/zloop.mac

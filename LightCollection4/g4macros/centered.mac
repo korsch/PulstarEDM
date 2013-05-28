@@ -1,0 +1,2 @@
+#Generate photons at the center of the plate just inside the plate surface
+/gun/position 0. 0.634 0. cm

@@ -1,0 +1,17 @@
+/control/verbose
+
+/vis/open HepRepFile
+/vis/drawVolume
+/vis/viewer/flush
+/vis/modeling/trajectories/create/drawByAttribute dba-0
+/vis/modeling/trajectories/dba-0/setAttribute Fate
+
+/vis/modeling/trajectories/dba-0/addValue tpb_key tpb 
+
+/vis/modeling/trajectories/dba-0/default/setLineColour red 
+/vis/modeling/trajectories/dba-0/tpb_key/setLineColour green
+
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate
+
+/run/beamOn 1000

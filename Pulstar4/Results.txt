@@ -1,0 +1,128 @@
+
+# eta = 5 10^-4, 4 10^-4
+-----------------------------------------------------------
+total # of neutrons in this run: 2000000
+total # of neutrons transmitted: 16083
+total time for transport to cell: 11444.960987088 s (for: 16083 UCNs)
+average time for transport to cell: 0.71161854051407 s 
+transport efficiency: 0.0080415
+Figure of Merit (<t>/eff): 88.493258784315
+-----------------------------------------------------------
+
+
+gray tube:                 8578.0735559286
+cone section:              351.96337747933
+yellow section 1:          357.90001865324
+yellow section 2:          262.02972082323
+infection cell (cylinder): 249.9504445688
+reflector:                 0
+Endcap (no hole):          26.758627121806
+Endcap (w/ hole):          29.513212709072
+Channel to target cell:    4.653049804141
+v1valve:                   14.042591556302
+v1rod:                     14.446931542623
+UCN stop                   16083
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+eta = 0,0
+-----------------------------------------------------------
+total # of neutrons in this run: 2000000
+total # of neutrons transmitted: 16611
+total time for transport to cell: 11959.675512833 s (for: 16611 UCNs)
+average time for transport to cell: 0.71998528161056 s 
+transport efficiency: 0.0083055
+Figure of Merit (<t>/eff): 86.687770948235
+-----------------------------------------------------------
+
+
+gray tube:                 8441.4742640419
+cone section:              347.53434471134
+yellow section 1:          357.78833303233
+yellow section 2:          265.51592318343
+infection cell (cylinder): 253.3598820059
+reflector:                 0
+Endcap (no hole):          27.09951237132
+Endcap (w/ hole):          29.693696947806
+Channel to target cell:    4.6924327253025
+v1valve:                   14.299500331106
+v1rod:                     14.604298356511
+UCN stop                   16611
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+eta = 1*10^-4, 1*10^-4
+-----------------------------------------------------------
+total # of neutrons in this run: 2000000
+total # of neutrons transmitted: 16803
+total time for transport to cell: 12111.853136454 s (for: 16803 UCNs)
+average time for transport to cell: 0.72081492212427 s 
+transport efficiency: 0.0084015
+Figure of Merit (<t>/eff): 85.795979542257
+-----------------------------------------------------------
+
+
+gray tube:                 8315.4437897994
+cone section:              341.96887460573
+yellow section 1:          350.45128846039
+yellow section 2:          261.7219544129
+infection cell (cylinder): 248.36112598941
+reflector:                 0
+Endcap (no hole):          26.630661191454
+Endcap (w/ hole):          29.217104088556
+Channel to target cell:    4.6501815152056
+v1valve:                   14.087960483247
+v1rod:                     14.505445456169
+UCN stop                   16803
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+eta = 1*10^-4, 1*10^-4, monoenergetic: 70 neV
+-----------------------------------------------------------
+total # of neutrons in this run: 2000000
+total # of neutrons transmitted: 16978
+total time for transport to cell: 15894.767066619 s (for: 16978 UCNs)
+average time for transport to cell: 0.93619784819289 s 
+transport efficiency: 0.008489
+Figure of Merit (<t>/eff): 110.28364332582
+-----------------------------------------------------------
+
+
+gray tube:                 8235.4346801743
+cone section:              338.657380139
+yellow section 1:          355.62098009188
+yellow section 2:          261.21156791141
+infection cell (cylinder): 249.09641889504
+reflector:                 0
+Endcap (no hole):          26.544351513724
+Endcap (w/ hole):          29.300094239604
+Channel to target cell:    4.7477912592767
+v1valve:                   14.03775474143
+v1rod:                     14.368476852397
+UCN stop                   16978
+
+---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
+eta = 1*10^-4, 1*10^-4, monoenergetic: 5total # of neutrons in this run: 2000000
+total # of neutrons transmitted: 17031
+total time for transport to cell: 19134.957478113 s (for: 17031 UCNs)
+average time for transport to cell: 1.1235369313671 s 
+transport efficiency: 0.0085155
+Figure of Merit (<t>/eff): 131.94021858577
+-----------------------------------------------------------
+
+
+gray tube:                 8195.2332804885
+cone section:              337.36386589161
+yellow section 1:          364.23515941518
+yellow section 2:          261.78069402854
+infection cell (cylinder): 248.60612999824
+reflector:                 0
+Endcap (no hole):          26.474370265986
+Endcap (w/ hole):          29.209324173566
+Channel to target cell:    4.600728084082
+v1valve:                   13.981563032118
+v1rod:                     14.39886090071
+UCN stop                   170310 neV
+-----------------------------------------------------------
+

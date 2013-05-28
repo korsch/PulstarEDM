@@ -1,0 +1,6 @@
+/run/verbose 2
+#Gun Positioned in TPB dot on the Test Piece
+/gun/position 0. 0.636 -27.62 cm
+
+
+

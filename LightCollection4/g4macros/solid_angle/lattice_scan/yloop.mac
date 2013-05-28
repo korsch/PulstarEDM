@@ -1,0 +1,1 @@
+/control/loop g4macros/solid_angle/lattice_scan/zloop.mac y -{ywidth} {ywidth} {ystep}

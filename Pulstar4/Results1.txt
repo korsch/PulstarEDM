@@ -1,0 +1,47 @@
+// no entrance window to vestibule
+-----------------------------------------------------------
+total # of neutrons in this run: 1000000
+total # of neutrons transmitted: 35404
+total time for transport to cell: 28558.223566327 s (for: 35404 UCNs)
+average time for transport to cell: 0.80663833370034 s 
+transport efficiency: 0.035404
+Figure of Merit (<t>/eff): 22.783819164511
+-----------------------------------------------------------
+
+
+gray tube:                 1928.8768500734
+cone section:              86.121878883742
+yellow section 1:          237.77556208338
+yellow section 2:          104.06970963733
+infection cell (cylinder): 143.67252287877
+reflector:                 0
+Endcap (w/ hole):          18.048808044289
+Endcap (no hole):          21.909360524235
+Channel to target cell:    2.6663088916507
+v1valve:                   0
+v1rod:                     0
+UCN stop                   35404
+------------------------------------------------------------
+-----------------------------------------------------------
+total # of neutrons in this run: 1000000
+total # of neutrons transmitted: 32627
+total time for transport to cell: 25728.539285287 s (for: 32627 UCNs)
+average time for transport to cell: 0.78856588976269 s 
+transport efficiency: 0.032627
+Figure of Merit (<t>/eff): 24.169120353164
+-----------------------------------------------------------
+
+
+gray tube:                 2085.9736414626
+cone section:              93.050755509241
+yellow section 1:          249.79041897815
+yellow section 2:          103.4963986882
+infection cell (cylinder): 145.22325068195
+reflector:                 0
+Endcap (w/ hole):          18.275324118062
+Endcap (no hole):          22.098323474423
+Channel to target cell:    2.6714684157293
+v1valve:                   0
+v1rod:                     0
+UCN stop                   32627
+------------------------------------------------------------------

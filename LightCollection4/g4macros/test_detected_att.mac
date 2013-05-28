@@ -1,0 +1,38 @@
+/control/verbose
+#/control/execute g4macros/lab_setup_1.125_geometry.mac
+#/nedm/detector/halfLG_x 1.429 cm
+/control/execute g4macros/enable_hole_w_plug.mac
+/nedm/detector/torlonLPB 0
+/nedm/detector/bulkAbsorption 650 cm
+/nedm/detector/castLPB 0.001
+/nedm/detector/machinedLPB 0.01
+/nedm/detector/halfLG_z 3.4925 cm
+/nedm/detector/update
+/vis/viewer/select viewer-0
+/vis/viewer/rebuild
+
+/vis/open HepRepFile
+/vis/drawVolume
+/vis/viewer/flush
+/vis/modeling/trajectories/create/drawByAttribute dba-0
+/vis/modeling/trajectories/dba-0/setAttribute Fate
+
+/vis/modeling/trajectories/dba-0/addValue det_key detected
+/vis/modeling/trajectories/dba-0/addValue cast_key cast
+/vis/modeling/trajectories/dba-0/addValue mach_key machined
+/vis/modeling/trajectories/dba-0/addValue bulk_key bulk
+
+#/vis/modeling/trajectories/dba-0/default/setDrawLine false
+/vis/modeling/trajectories/dba-0/det_key/setLineColour green
+/vis/modeling/trajectories/dba-0/cast_key/setLineColour blue
+/vis/modeling/trajectories/dba-0/mach_key/setLineColour yellow
+/vis/modeling/trajectories/dba-0/bulk_key/setLineColour red
+
+/vis/scene/add/trajectories
+/vis/scene/endOfEventAction accumulate 1000
+
+/nedm/detector/castLPB 0
+/nedm/detector/machinedLPB 0
+/nedm/detector/bulkAbsorption 100 m
+
+/run/beamOn 1000

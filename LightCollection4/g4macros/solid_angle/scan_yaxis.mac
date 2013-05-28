@@ -1,0 +1,8 @@
+/control/verbose
+/guides/analysis/rootfile solid_angle_yscan.root
+/control/alias x 0.
+/control/alias z 0.
+/control/alias ywidth 3.5
+/control/alias ystep 0.5
+/control/alias events 10000
+/control/loop g4macros/solid_angle/lattice_scan/do_run.mac y -{ywidth} {ywidth} {ystep}

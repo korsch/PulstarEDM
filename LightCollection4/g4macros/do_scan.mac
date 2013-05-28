@@ -1,0 +1,2 @@
+/gun/position {x} {y} {z} cm
+/run/beamOn {events}

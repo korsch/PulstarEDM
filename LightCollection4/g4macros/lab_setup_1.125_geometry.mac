@@ -1,0 +1,5 @@
+/run/verbose 2
+/nedm/detector/testPiece false
+
+#Produce photons just inside surface, 11 inches from lightguide.
+/gun/position 0. 0.634 -7.938 cm
